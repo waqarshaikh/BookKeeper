@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const { Parser } = require('json2csv');
 const cors = require('cors');
 const db = require('../db/db');
 
@@ -55,5 +56,19 @@ app.get('/api/books/filter', async (req, res) => {
     }
 });
 
+app.get('/api/books/export', async (req, res) => {
+    try {
+        const [rows] = await db.query('SELECT * FROM Inventory');
+        const json2csvParser = new Parser();
+        const csv = json2csvParser.parse(rows);
+
+        res.header('Content-Type', 'text/csv');
+        res.attachment('books_inventory.csv');
+        res.send(csv);
+    } catch (error) {
+        console.error('Error exporting books:', error);
+        res.status(500).json({ error: 'Failed to export books' });
+    }
+});
 
 module.exports = app;
