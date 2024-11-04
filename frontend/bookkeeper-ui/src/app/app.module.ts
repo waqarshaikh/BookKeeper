@@ -7,6 +7,7 @@ import { AddBookFormComponent } from './add-book-form/add-book-form.component';
 import { FilterFormComponent } from './filter-form/filter-form.component';
 import { BookListComponent } from './book-list/book-list.component';
 import { ExportButtonComponent } from './export-button/export-button.component';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ExportButtonComponent } from './export-button/export-button.component';
     ExportButtonComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule
   ],

@@ -1,1 +1,5 @@
-<p>book-list works!</p>
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let book of books">
+    <strong>{{ book.title }}</strong> by {{ book.author }} ({{ book.genre }})
+  </li>
+</ul>
