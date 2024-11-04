@@ -1,0 +1,43 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Angular
+dist/
+coverage/
+.sass-cache/
+.angular/
+
+# IDE and Editor specific
+.idea/
+*.iml
+
+# Logs
+logs/
+*.log
+pids/
+*.pid
+
+# Environment Variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build files
+build/
+out/
+
+# Misc
+.DS_Store
+Thumbs.db
