@@ -1,19 +1,19 @@
 const request = require('supertest');
-const app = require('../src/index'); // Import your Express app
+const app = require('../src/index');
 
 describe('GET api/books', () => {
     it('should return a list of books', async () => {
         const response = await request(app)
-            .get('/api/books')  // Adjust the route to your get books endpoint
+            .get('/api/books')
             .set('Accept', 'application/json');
 
-        expect(response.status).toBe(200); // Check for success status
-        expect(Array.isArray(response.body)).toBe(true); // Ensure the response body is an array
+        expect(response.status).toBe(200);
+        expect(Array.isArray(response.body)).toBe(true);
     });
 
     it('should return a list of books with the correct properties', async () => {
         const response = await request(app)
-            .get('/api/books')  // Adjust the route to your get books endpoint
+            .get('/api/books')
             .set('Accept', 'application/json');
 
         const book = response.body[0];
@@ -39,9 +39,9 @@ describe('POST api/books', () => {
             .send(newBook)
             .set('Accept', 'application/json');
 
-        expect(response.status).toBe(201); // Check for success status
-        expect(response.body).toHaveProperty('id'); // Ensure the response contains an id
-        expect(response.body.title).toBe(newBook.title); // Check that the title matches
+        expect(response.status).toBe(201);
+        expect(response.body).toHaveProperty('id');
+        expect(response.body.title).toBe(newBook.title);
     });
 });
 

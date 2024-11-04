@@ -4,8 +4,6 @@ const cors = require('cors');
 const db = require('../db/db');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -14,7 +12,7 @@ app.get('/api/books', async (req, res) => {
         const [rows] = await db.query('SELECT * FROM Inventory');
         res.status(200).json(rows);
     } catch (error) {
-        console.error('Error fetching books:', error); // Log the error for debugging
+        console.error('Error fetching books:', error);
         res.status(500).json({ error: 'Failed to retrieve books' });
     }
 });
