@@ -5,6 +5,8 @@ const cors = require('cors');
 const db = require('../db/db');
 
 const app = express();
+const PORT = process.env.PORT || 3001;
+
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -69,6 +71,10 @@ app.get('/api/books/export', async (req, res) => {
         console.error('Error exporting books:', error);
         res.status(500).json({ error: 'Failed to export books' });
     }
+});
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
 
 module.exports = app;
