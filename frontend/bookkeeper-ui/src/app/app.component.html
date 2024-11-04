@@ -1,19 +1,19 @@
 <div class="container mt-5">
   <h1 class="text-center">Book Inventory Management</h1>
 
-  <div class="my-4">
-    <app-add-book-form></app-add-book-form>
-  </div>
+  <nav>
+    <ul class="nav justify-content-center">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/books" routerLinkActive="active">Book List</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/books/add" routerLinkActive="active">Add Book</a>
+      </li>
+    </ul>
+  </nav>
 
   <div class="my-4">
-    <app-filter-form></app-filter-form>
+    <!-- This is where routed components will be rendered -->
+    <router-outlet></router-outlet>
   </div>
-  <div class="my-4 text-center">
-    <app-export-button></app-export-button>
-  </div>
-
-  <div class="my-4">
-    <app-book-list></app-book-list>
-  </div>
-
 </div>
