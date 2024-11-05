@@ -9,6 +9,12 @@ import {BookService} from "../book.service";
 })
 export class BookListComponent implements OnInit {
   books: Book[] = [];
+  filters = {
+    title: '',
+    author: '',
+    genre: '',
+    publicationDate: ''
+  };
 
   constructor(private bookService: BookService) { }
 
@@ -17,7 +23,12 @@ export class BookListComponent implements OnInit {
   }
 
   getBooks(): void {
-    this.bookService.getBooks().subscribe(books => this.books = books);
+    this.bookService.filterBooks(this.filters).subscribe(books => this.books = books);
     console.log(this.books);
+  }
+
+  onFilter(filters: any): void {
+    this.filters = filters;
+    this.getBooks();
   }
 }

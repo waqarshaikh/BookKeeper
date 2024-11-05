@@ -1,15 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-filter-form',
   templateUrl: './filter-form.component.html',
   styleUrls: ['./filter-form.component.css']
 })
-export class FilterFormComponent implements OnInit {
+export class FilterFormComponent {
 
-  constructor() { }
+  filters = {
+    title: '',
+    author: '',
+    genre: '',
+    publicationDate: ''
+  };
 
-  ngOnInit(): void {
+  @Output() filterChange = new EventEmitter<any>();
+
+  onFilter(): void {
+    this.filterChange.emit(this.filters);
   }
 
 }
