@@ -1,1 +1,43 @@
-<p>add-book-form works!</p>
+<form (ngSubmit)="onSubmit(bookForm)" #bookForm="ngForm">
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input type="text" id="title" class="form-control" [(ngModel)]="book.title" name="title" required />
+    <div *ngIf="bookForm.controls['title']?.invalid && (bookForm.controls['title']?.touched || bookForm.submitted)" class="text-danger">
+      Title is required.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="author">Author</label>
+    <input type="text" id="author" class="form-control" [(ngModel)]="book.author" name="author" required />
+    <div *ngIf="bookForm.controls['author']?.invalid && (bookForm.controls['author']?.touched || bookForm.submitted)" class="text-danger">
+      Author is required.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="genre">Genre</label>
+    <input type="text" id="genre" class="form-control" [(ngModel)]="book.genre" name="genre" required />
+    <div *ngIf="bookForm.controls['genre']?.invalid && (bookForm.controls['genre']?.touched || bookForm.submitted)" class="text-danger">
+      Genre is required.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="publicationDate">Publication Date</label>
+    <input type="date" id="publicationDate" class="form-control" [(ngModel)]="book.publicationDate" name="publicationDate" required />
+    <div *ngIf="bookForm.controls['publicationDate']?.invalid && (bookForm.controls['publicationDate']?.touched || bookForm.submitted)" class="text-danger">
+      Publication Date is required.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="isbn">ISBN</label>
+    <input type="text" id="isbn" class="form-control" [(ngModel)]="book.isbn" name="isbn" required pattern="^(978|979)-\d{1,5}-\d{1,7}-\d{1,7}-\d{1}$" />
+    <div *ngIf="bookForm.controls['isbn']?.invalid && (bookForm.controls['isbn']?.touched || bookForm.submitted)" class="text-danger">
+      ISBN is required and must follow the format 978-X-XXX-XXXXX-X or 979-X-XXX-XXXXX-X.
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary mt-3" [disabled]="bookForm.invalid">Add Book</button>
+</form>
