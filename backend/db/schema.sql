@@ -4,6 +4,6 @@ CREATE TABLE Inventory
     title            VARCHAR(255)       NOT NULL,
     author           VARCHAR(255)       NOT NULL,
     genre            VARCHAR(100),
-    publication_date DATE,
+    publicationDate DATE,
     isbn             VARCHAR(20) UNIQUE NOT NULL
 );

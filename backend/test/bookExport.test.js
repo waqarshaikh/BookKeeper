@@ -4,9 +4,9 @@ const db = require('../db/db');
 
 describe('GET /api/books/export', () => {
     beforeAll(async () => {
-        await db.query('INSERT INTO Inventory (title, author, publication_date, genre, isbn) VALUES (?, ?, ?, ?, ?)',
+        await db.query('INSERT INTO Inventory (title, author, publicationDate, genre, isbn) VALUES (?, ?, ?, ?, ?)',
             ['The Great Gatsby', 'F. Scott Fitzgerald', '1925-04-10', 'Fiction', '9780743273565']);
-        await db.query('INSERT INTO Inventory (title, author, publication_date, genre, isbn) VALUES (?, ?, ?, ?, ?)',
+        await db.query('INSERT INTO Inventory (title, author, publicationDate, genre, isbn) VALUES (?, ?, ?, ?, ?)',
             ['1984', 'George Orwell', '1949-06-08', 'Dystopian', '9780451524935']);
     });
 

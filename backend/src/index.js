@@ -21,10 +21,12 @@ app.get('/api/books', async (req, res) => {
 });
 
 app.post('/api/books', async (req, res) => {
-    const { title, author, publication_date, genre, isbn } = req.body;
+    const { title, author, publicationDate, genre, isbn } = req.body;
     try {
-        const [result] = await db.query('INSERT INTO Inventory (title, author, publication_date, genre, isbn) VALUES (?, ?, ?, ?, ?)', [title, author, publication_date, genre, isbn]);
-        res.status(201).json({ id: result.insertId, title, author, publication_date, genre, isbn });
+        const date = new Date(publicationDate);
+        const formattedDate = date.toISOString().split('T')[0];
+        const [result] = await db.query('INSERT INTO Inventory (title, author, publicationDate, genre, isbn) VALUES (?, ?, ?, ?, ?)', [title, author, formattedDate, genre, isbn]);
+        res.status(201).json({ id: result.insertId, title, author, publicationDate: formattedDate, genre, isbn });
     } catch (error) {
         console.error('Error adding book:', error);
         res.status(500).json({ error: 'Failed to add book' });
@@ -72,6 +74,50 @@ app.get('/api/books/export', async (req, res) => {
         res.status(500).json({ error: 'Failed to export books' });
     }
 });
+
+app.put('/api/books/:id', async (req, res) => {
+    const { id } = req.params;
+    const { title, author, publicationDate, genre, isbn } = req.body;
+
+    try {
+        console.log('date', publicationDate);
+        await db.query('UPDATE Inventory SET title = ?, author = ?, publicationDate = ?, genre = ?, isbn = ? WHERE entry_id = ?',
+            [title, author, publicationDate, genre, isbn, id]);
+        const [updatedBook] = await db.query('SELECT * FROM Inventory WHERE entry_id = ?', [id]);
+        updatedBook[0].publicationDate = updatedBook[0].publicationDate.toISOString().split('T')[0];
+        res.status(200).json(updatedBook[0]);
+    } catch (error) {
+        console.error('Error updating book:', error);
+        res.status(500).json({ error: 'Failed to update book' });
+    }
+});
+
+app.delete('/api/books/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        await db.query('DELETE FROM Inventory WHERE entry_id = ?', [id]);
+        res.status(200).json({ message: 'Book deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting book:', error);
+        res.status(500).json({ error: 'Failed to delete book' });
+    }
+});
+
+app.get('/api/books/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const [rows] = await db.query('SELECT * FROM Inventory WHERE entry_id = ?', [id]);
+        if (rows.length === 0) {
+            return res.status(404).json({ error: 'Book not found' });
+        }
+        res.status(200).json(rows[0]);
+    } catch (error) {
+        console.error('Error fetching book:', error);
+        res.status(500).json({ error: 'Failed to retrieve book' });
+    }
+});
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
