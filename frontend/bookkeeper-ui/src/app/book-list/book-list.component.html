@@ -3,6 +3,7 @@
     <app-filter-form (filterChange)="onFilter($event)"></app-filter-form>
   </div>
   <div class="col-md-9 book-list-container">
+    <button class="btn btn-secondary mb-3" (click)="exportBooks()">Export Books</button>
     <ul class="list-group">
       <li class="list-group-item" *ngFor="let book of books">
         <strong>{{ book.title }}</strong> by {{ book.author }} ({{ book.genre }})

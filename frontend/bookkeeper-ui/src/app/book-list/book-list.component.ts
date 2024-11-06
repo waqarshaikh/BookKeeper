@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Book} from "../book.model";
-import {BookService} from "../book.service";
+import { Book } from '../book.model';
+import { BookService } from '../book.service';
 
 @Component({
   selector: 'app-book-list',
@@ -24,11 +24,21 @@ export class BookListComponent implements OnInit {
 
   getBooks(): void {
     this.bookService.filterBooks(this.filters).subscribe(books => this.books = books);
-    console.log(this.books);
   }
 
   onFilter(filters: any): void {
     this.filters = filters;
     this.getBooks();
+  }
+
+  exportBooks(): void {
+    this.bookService.exportBooks().subscribe(blob => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'books_inventory.csv';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    });
   }
 }
