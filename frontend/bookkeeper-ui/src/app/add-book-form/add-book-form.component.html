@@ -25,7 +25,7 @@
 
   <div class="form-group">
     <label for="publicationDate">Publication Date</label>
-    <input type="date" id="publicationDate" class="form-control" [(ngModel)]="book.publicationDate" name="publicationDate" required />
+    <input type="date" id="publicationDate" class="form-control" [(ngModel)]="formattedPublicationDate" name="publicationDate" required />
     <div *ngIf="bookForm.controls['publicationDate']?.invalid && (bookForm.controls['publicationDate']?.touched || bookForm.submitted)" class="text-danger">
       Publication Date is required.
     </div>
@@ -39,5 +39,5 @@
     </div>
   </div>
 
-  <button type="submit" class="btn btn-primary mt-3" [disabled]="bookForm.invalid">Add Book</button>
+  <button type="submit" class="btn btn-primary mt-3" [disabled]="bookForm.invalid">{{ isEditMode ? 'Update Book' : 'Add Book' }}</button>
 </form>

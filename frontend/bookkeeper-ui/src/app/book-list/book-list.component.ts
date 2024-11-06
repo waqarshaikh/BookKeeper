@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Book } from '../book.model';
 import { BookService } from '../book.service';
+import { Router } from '@angular/router';
+import {tap} from "rxjs";
 
 @Component({
   selector: 'app-book-list',
@@ -16,14 +18,24 @@ export class BookListComponent implements OnInit {
     publicationDate: ''
   };
 
-  constructor(private bookService: BookService) { }
+  constructor(private bookService: BookService, private router: Router) { }
 
   ngOnInit(): void {
     this.getBooks();
+    console.log('Books:', this.books);
   }
 
   getBooks(): void {
-    this.bookService.filterBooks(this.filters).subscribe(books => this.books = books);
+    const hasFilters = Object.values(this.filters).some(value => value);
+    if (hasFilters) {
+      this.bookService.filterBooks(this.filters)
+        .pipe(tap(books => console.log('Books:', books)))
+        .subscribe(books => this.books = books);
+    } else {
+      this.bookService.getBooks()
+        .pipe(tap(books => console.log('Books:', books)))
+        .subscribe(books => this.books = books);
+    }
   }
 
   onFilter(filters: any): void {
@@ -39,6 +51,19 @@ export class BookListComponent implements OnInit {
       a.download = 'books_inventory.csv';
       a.click();
       window.URL.revokeObjectURL(url);
+    });
+  }
+
+  editBook(bookId: number | undefined): void {
+    if (bookId !== undefined) {
+      console.log('Editing book:', bookId);
+      this.router.navigate(['/books/edit', bookId]);
+    }
+  }
+
+  deleteBook(bookId: number | undefined): void {
+    this.bookService.deleteBook(bookId).subscribe(() => {
+      this.getBooks();
     });
   }
 }

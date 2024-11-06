@@ -7,6 +7,8 @@
     <ul class="list-group">
       <li class="list-group-item" *ngFor="let book of books">
         <strong>{{ book.title }}</strong> by {{ book.author }} ({{ book.genre }})
+        <button class="btn btn-primary btn-sm float-end ms-2" (click)="editBook(book.entry_id)">Edit</button>
+        <button class="btn btn-danger btn-sm float-end" (click)="deleteBook(book.entry_id)">Delete</button>
       </li>
     </ul>
   </div>
