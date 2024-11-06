@@ -1,3 +1,44 @@
 .book-list-container {
   margin-top: 20px;
 }
+
+.list-group-item {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 15px 25px;
+  transition: background-color 0.3s ease;
+  font-size: 1.1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list-group-item:hover {
+  background-color: #f8f9fa;
+}
+
+.book-details {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.book-details h5 {
+  font-size: 1.5em;
+  margin-bottom: 5px;
+}
+
+.book-details p {
+  margin-bottom: 2px;
+}
+
+.book-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.book-actions .btn {
+  padding: 5px 10px;
+  font-size: 1.1em;
+}

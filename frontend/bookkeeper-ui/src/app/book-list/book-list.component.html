@@ -1,15 +1,27 @@
 <div class="row">
   <div class="col-md-3">
+    <h4>Filter Books</h4>
     <app-filter-form (filterChange)="onFilter($event)"></app-filter-form>
   </div>
   <div class="col-md-9 book-list-container">
-    <button class="btn btn-secondary mb-3" (click)="exportBooks()">Export Books</button>
-    <ul class="list-group">
-      <li class="list-group-item" *ngFor="let book of books">
-        <strong>{{ book.title }}</strong> by {{ book.author }} ({{ book.genre }})
-        <button class="btn btn-primary btn-sm float-end ms-2" (click)="editBook(book.entry_id)">Edit</button>
-        <button class="btn btn-danger btn-sm float-end" (click)="deleteBook(book.entry_id)">Delete</button>
+    <button *ngIf="books.length > 0" class="btn btn-secondary mb-3" (click)="exportBooks()">Export Books</button>
+    <ul class="list-group" *ngIf="books.length > 0; else noBooksMessage">
+      <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let book of books">
+        <div class="book-details">
+          <h5>{{ book.title }}</h5>
+          <p><strong>Author:</strong> {{ book.author }}</p>
+          <p><strong>Genre:</strong> {{ book.genre }}</p>
+          <p><strong>Publication Date:</strong> {{ book.publicationDate | date }}</p>
+          <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+        </div>
+        <div class="book-actions">
+          <button class="btn btn-primary btn-sm" (click)="editBook(book.entry_id)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteBook(book.entry_id)">Delete</button>
+        </div>
       </li>
     </ul>
+    <ng-template #noBooksMessage>
+      <p>No books available. Please add a book.</p>
+    </ng-template>
   </div>
 </div>
