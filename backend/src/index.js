@@ -80,9 +80,10 @@ app.put('/api/books/:id', async (req, res) => {
     const { title, author, publicationDate, genre, isbn } = req.body;
 
     try {
-        console.log('date', publicationDate);
+        const date = new Date(publicationDate);
+        const formattedDate = date.toISOString().split('T')[0];
         await db.query('UPDATE Inventory SET title = ?, author = ?, publicationDate = ?, genre = ?, isbn = ? WHERE entry_id = ?',
-            [title, author, publicationDate, genre, isbn, id]);
+            [title, author, formattedDate, genre, isbn, id]);
         const [updatedBook] = await db.query('SELECT * FROM Inventory WHERE entry_id = ?', [id]);
         updatedBook[0].publicationDate = updatedBook[0].publicationDate.toISOString().split('T')[0];
         res.status(200).json(updatedBook[0]);
